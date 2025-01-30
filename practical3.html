@@ -11,6 +11,16 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
+  <style>
+  .boxed-container {
+      border: 2px solid black;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      width: fit-content;
+      margin: 20px auto;
+  }  
+  </style>
 </head>
 <body>
 <header id="title-block-header">
@@ -60,10 +70,12 @@
 <p><strong><span class="underline">'Hosing the N Atlantic'</span></strong></p>
 <p>Instead of adding a dye tracer, you could add fresh water to assess the sensitivity of the Atlantic Meridional Overturning Circulation (AMOC) to collapse in a classic ‘hosing’ experiment. The user-config file for this is called: LAB_2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)!</p>
 <p>To orientate you in freshwater forcing space: bg_par_ocn_force_scale_val_2= -2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux. Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic …</p>
-<p><em>A brief note on units ... the freshwater forcing is implemented as negative salinity, just to really screw with your mind. The generic internal cGENIE model units for the forcing end up as PSU kg-1 yr-1. Which sort of does not make much sense ... Start, by thinking of a value of bg_par_ocn_force_scale_val_2 of -34.9 as equivalent to taking all the salt out of 1 kg of freshwater (since the mean global salinity is 34.9 PSU). Or equivalently, since the ocean volume is fixed, an applied forcing value of -34.9 is equivalent to adding 1 kg of freshwater to a (surface) box. So, a value of bg_par_ocn_force_scale_val_2 of -3.49x10<sup>4</sup> (-3.49E04) would be a flux of 1 m3 yr-1 (1000 kg m-3) of freshwater. So, if we set (bg_par_ocn_force_scale_val_2=-1.0E18), the freshwater flux is:</em></p>
-<p><em>1.0x10<sup>18</sup>/3.49x10<sup>4</sup> = 2.8653x10<sup>13</sup> m3 yr-1.</em></p>
-<p><em>The literature invariably gives freshwater fluxes in units of Sv (10<sup>6</sup> m3 s-1). So in the example, the freshwater flux is: 9.0797x10<sup>5</sup>m3 s-1 (365.25x24x3600 = 31557600 s yr-1). Or 0.9 Sv. Read the literature … but generally, fluxes of ca. 0.05 Sv and larger (and to quite specific places) are applied in models in order to induce a collapse of the AMOC. </em><strong><br />
+<div class="boxed-container">
+    <p>A brief note on units ... the freshwater forcing is implemented as negative salinity, just to really screw with your mind. The generic internal cGENIE model units for the forcing end up as PSU kg-1 yr-1. Which sort of does not make much sense ... Start, by thinking of a value of bg_par_ocn_force_scale_val_2 of -34.9 as equivalent to taking all the salt out of 1 kg of freshwater (since the mean global salinity is 34.9 PSU). Or equivalently, since the ocean volume is fixed, an applied forcing value of -34.9 is equivalent to adding 1 kg of freshwater to a (surface) box. So, a value of bg_par_ocn_force_scale_val_2 of -3.49x10<sup>4</sup> (-3.49E04) would be a flux of 1 m3 yr-1 (1000 kg m-3) of freshwater. So, if we set (bg_par_ocn_force_scale_val_2=-1.0E18), the freshwater flux is:</p>
+    <p>1.0x10<sup>18</sup>/3.49x10<sup>4</sup> = 2.8653x10<sup>13</sup> m3 yr-1.</p>
+    <p>The literature invariably gives freshwater fluxes in units of Sv (10<sup>6</sup> m3 s-1). So in the example, the freshwater flux is: 9.0797x10<sup>5</sup>m3 s-1 (365.25x24x3600 = 31557600 s yr-1). Or 0.9 Sv. Read the literature … but generally, fluxes of ca. 0.05 Sv and larger (and to quite specific places) are applied in models in order to induce a collapse of the AMOC. <strong><br />
 </strong></p>
+</div>
 <p>Again, rename the user-config to something memorable for you, then run the model for e.g. 20 years using the same restart e.g.:</p>
 <p>$ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS LAB_2.hosing_test1 20 LAB_2.SPIN</p>
 <p>20 years should be long enough to see a collapse start to occur, but you might want to run the model for longer (and it can be submitted as a job, of course). Running for longer will also allow you to have a smaller, less extreme (and maybe more realistic) freshwater input flux.</p>
